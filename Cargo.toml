@@ -20,5 +20,5 @@ inherits = "release"
 lto = "fat"
 
 [[bin]]
-name = "minipush"
+name = "scip"
 path = "src/main.rs"
