@@ -36,6 +36,10 @@ struct SC {
     #[clap(long, short)]
     binfile: Option<String>,
 
+    /// Show push in terminal
+    #[clap(long, short)]
+    verbose: bool,
+
     /// Help flag
     #[clap(long, action = ArgAction::Help)]
     help: Option<bool>,
@@ -179,10 +183,15 @@ fn main() {
             NextStep::None => (),
             NextStep::LoopBreak => break,
             NextStep::Upload if upload => {
-                screen.write_all(b"UPLOAD\r\n").unwrap();
+                if sc_args.verbose {
+                    screen.write_all(b"UPLOADING... ").unwrap();
+                }
                 let binfile = arg_record.binfile.as_ref().unwrap();
                 upload_to_serial_port(binfile, &mut serial_port)
                     .unwrap_or_else(|e| eprint!("{}upload failed: {}", ToMainScreen, e));
+                if sc_args.verbose {
+                    screen.write_all(b"DONE.\r\n").unwrap();
+                }
                 continue;
             }
             _ => unreachable!(),
@@ -237,6 +246,7 @@ fn read_from_serial_port(
 ) -> NextStep {
     static ETX_COUNT: AtomicU8 = AtomicU8::new(0);
     let mut serial_bytes = [0; 512];
+    #[allow(clippy::needless_return)]
     match serial_port.read(&mut serial_bytes[..]) {
         Ok(n) => {
             if upload {
@@ -244,7 +254,6 @@ fn read_from_serial_port(
                 let mut etx_count = ETX_COUNT.load(Acquire);
                 for (i, &b) in serial_bytes[..n].iter().enumerate() {
                     if b == 3 {
-                        screen.write_all(b"ETX\r\n").unwrap();
                         etx_count += 1;
                         if etx_count >= 3 {
                             ETX_COUNT.store(0, Release);

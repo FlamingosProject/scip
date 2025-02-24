@@ -13,6 +13,7 @@ USAGE:
 
 ARGS:
     --binfile <FILE>  Provide a file that can be uploaded by a remote escape sequence
+    --verbose         Print messages during file upload
     <DEVICE>          Set the device path to a serial port
     <baud rate>       Set the baud rate to connect at [default: 9600]
     <data bits>       Set the number of bits used per character [default: 8] [possible values:
