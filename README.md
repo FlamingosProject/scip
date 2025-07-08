@@ -1,12 +1,23 @@
-# Scip - Serial Console Interfacing Program
+# scipio: a roamin' general terminal program
+
+This is a fork by Bart Massey and Philipp Oppermann of the
+quite nice [Scip](https://gitlab.com/w0lff/scip) Rust serial
+terminal program, with an enhancement to upload bin files to
+a remote.
+
+This version of Scip supports the upload protocol used by
+<https://github.com/FlamingosProject/flamingos/>
+for uploading kernel images to a Raspberry Pi: this is
+intended as a replacement for the Ruby `minipush` in the
+original tutorials. See the OS source code for details.
+
+The remainder of this README is from the original Scip.
+
+## Scip - Serial Console Interfacing Program
+
 A command line tool to communicate with a serial console written in [Rust](https://rust-lang.org)
 
-## Installation
-```bash
-cargo install serial-console
-```
-
-## Usage
+### Usage
 ```
 USAGE:
     scip [--binfile <FILE>] <DEVICE> [ARGS]
@@ -33,20 +44,12 @@ For more verbose help information and parameter suggestions add the `--help` opt
 scip --help
 ```
 
-## Binfile support
-
-This version of `scip` supports the upload protocol used by
-<https://github.com/rust-embedded/rust-raspberrypi-OS-tutorials/>
-for uploading kernel images to a Raspberry Pi: this is
-intended as a replacement for the Ruby `minipush` in the
-tutorials. See the tutorial source code for details.
-
-## Examples
+### Examples
 ```bash
 scip /dev/ttyUSB0 115200
 scip /dev/ttyUSB1 19200 6 E 2 H
 scip --binfile kernel8.img /dev/ttyUSB0 921600 8 N 1 N
 ```
 
-## License
+### License
 MIT
