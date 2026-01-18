@@ -1,6 +1,8 @@
 # Scip - Serial Console Interfacing Program
 
-A command line tool to communicate with a serial console written in [Rust](https://rust-lang.org)
+*This version of Scip is a fork of the original by Hendrik Wolff <https://gitlab.com/w0lff/scip>. The fork adds binary uploading and some CLI enhancements.*
+
+Scip is a command line tool to communicate with a serial console written in [Rust](https://rust-lang.org)
 
 ## Installation
 
